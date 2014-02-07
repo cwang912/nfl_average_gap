@@ -1,11 +1,10 @@
 
-# In[3]:
-
 import pandas as pd
 import os
 import pprint
+import csv
 
-cwd = os.getcwd() + '/Data/2012_nfl_pbp_data_reg.csv'
+cwd = os.getcwd() + '/2012_nfl_pbp_data_reg.csv'
 
 data = pd.read_csv(cwd)
 
@@ -24,9 +23,6 @@ for i in team_ids:
     wins[i] = 0
     losses[i] = 0
     scores[i] = dict()
-
-
-# In[6]:
 
 def get_gap(game, wins, losses):
     
@@ -74,9 +70,6 @@ def get_gap(game, wins, losses):
         losses[team1] += 1      
     return average_gap, actual_gap, wins, losses
 
-
-# In[7]:
-
 for i in game_ids:
     game = data.values[data.gameid==i]
     average_gap, gap, wins, losses = get_gap(game, wins, losses)
@@ -84,10 +77,6 @@ for i in game_ids:
         season_gap[j] += average_gap[j]
         actual_gap[j] += gap[j]
 
-
-# In[17]:
-
-import csv
 with open("2012_nfl_gap.csv", "wb") as csvfile:
     c = csv.writer(csvfile, delimiter=',')
     for i in wins:
